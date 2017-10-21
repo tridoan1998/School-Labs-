@@ -10,6 +10,23 @@ using namespace std;
 template <class listdata>
 class List
 {
+private:
+    Struct Node{
+            listdata data;
+            Node* linkprevious;
+            Node* linknext;
+            
+            Node(listdata newData)
+            {
+                data = newData;
+                linkprevious = NULL;
+                linknext = NULL;
+            }
+        Node* start;
+        Node* stop;
+        Node* Iterator;
+        int size;
+    }
     public:
     /**Constructors and Destructors*/
 
@@ -120,10 +137,6 @@ class List
     //Prints the contents of the linked list to the screen in the format #: <element> followed by a newline
     //Similar to the print function but with the format #: <element> go along.
 
-    void swap(int num1, int num2);
-    //Swap two element in the list.
-    //Precondition: Iterator points to a list.
-    //Postcondition: The two elements selected are swap.
     private:
        struct Node {
            stackdata data;
@@ -147,13 +160,36 @@ class List
 
 
 template <class listdata>
-void Stack<listdata>::List()
+void List<listdata>::List()
 {
-    
-    
+    start = NULL;
+    stop = NULL;
+    iterator = NULL;
+    size = 0;
 }
+
 template <class listdata>
-void Stack<listdata>::removeStart()	//removeStart
+void List<listdata>::List(const List& list)     //list here is the original list
+{
+    if(list.start == NULL)
+        start = stop = iterator = NULL;
+    else
+    {
+ //calling Node constructor
+    start = new Node(list.start->data);
+ //set a temporary node pointer to point at the first of the original list
+    Node* temp  = list.start;
+   //set iterator to point to first node of the new list
+    iterator = start;    
+    }
+    while(temp->linknext !=NULL)
+    {
+        temp = temp->linknext; 
+    }
+}
+
+template <class listdata>
+void List<listdata>::removeStart()	//removeStart
 {
     assert(size != 0)   
     if(size == 1)
@@ -170,7 +206,7 @@ void Stack<listdata>::removeStart()	//removeStart
 }
 
 template <class listdata>
-void Stack<listdata>::removeStop()
+void List<listdata>::removeStop()
 {
     assert(size != 0)
     if(size == 1)
@@ -191,7 +227,7 @@ void Stack<listdata>::removeStop()
 
 
 template <class listdata>
-void Stack<listdata>::pointiterrator()
+void List<listdata>::pointiterrator()
 {
     iterator = start;
 }
@@ -214,7 +250,7 @@ bool List<listdata>::offEnd() const
     
     
 template <class listdata>
-void Stack<listdata>::insertStar(data)  
+void List<listdata>::insertStar(data)  
 {
     if(!offEnd)
     {
@@ -227,7 +263,7 @@ void Stack<listdata>::insertStar(data)
 }
 
 template <class listdata>
-void Stack<listdat>::insertStop(listdata data)
+void List<listdat>::insertStop(listdata data)
 {
     if(size ==0)
     {
@@ -246,7 +282,7 @@ void Stack<listdat>::insertStop(listdata data)
 }
 
 template <class listdata>
-bool Stack<listdat>::operator==(const List& list)
+bool List<listdat>::operator==(const List& list)
 {
     if(size != list.size)
         return false;
@@ -256,6 +292,12 @@ bool Stack<listdat>::operator==(const List& list)
     {    
         temp1 = temp1->linkenxt;
         temp2 = temp2->linknext;
+        if(temp1 != temp2)
+        {
+            return false;
+        }
+        else 
+            return true;
     }
 }
 
