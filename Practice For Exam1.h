@@ -158,7 +158,6 @@ private:
 
 };
 
-
 template <class listdata>
 void List<listdata>::List()
 {
@@ -185,121 +184,183 @@ void List<listdata>::List(const List& list)     //list here is the original list
     while(temp->linknext !=NULL)
     {
         temp = temp->linknext; 
+        iterator->linknext = new Node(temp->data)
+        iterator->linknext->linkprevious = iterator;
+        iterator = iterator->linknext;
     }
+    stop = iterator;
+    size = list.size;
 }
 
 template <class listdata>
-void List<listdata>::removeStart()	//removeStart
+void List<listdata>::~List()
 {
-    assert(size != 0)   
-    if(size == 1)
+    Node* b = start;
+    Node* a = NULL;
+    while(b != NULL)
     {
-        delete start;
-        start = stop = 0;
-        size = 0;
-    }
-    Node* temp = start;
-    start = start->linknext;
-    start->linkprevious = NULL;
-    deelete temp;
-    size--;
-}
-
-template <class listdata>
-void List<listdata>::removeStop()
-{
-    assert(size != 0)
-    if(size == 1)
-    {
-        delete stop;
-        start = stop = iterator = NULL;
-        size = 0;
-    }
-    else 
-    {
-        iterator = stop;
-        stop = stop->linkprevious;
-        stop->linknext = NULL;
-        delete iterator;
-        size--;
+        b->linknext = a;
+        delete b;
+        b = a;
     }
 }
 
-
 template <class listdata>
-void List<listdata>::pointiterrator()
+listdata List<listdata>::getStart() const
 {
-    iterator = start;
+    assert(!=0)     // enforce the precondition 
+    return star->data;
 }
 
 template <class listdata>
-void Stack<listdata>::()
+listdata List<listdata>::getStart() const
 {
-    
+    assert(!=0)
+    return stop->data;
 }
 
+template <class listdata>
+bool List<listdata>::isEmpty() const
+{
+    return == 0;
+}
 
-template<class listdata>
+template <class listdata>
+int List<listdata>::getSize() const
+{
+    return size;
+}
+
+template <class listdata>
 bool List<listdata>::offEnd() const
 {
-    if(iterator == NULL)
-        return true;
-    else 
-        return false;
-}
-    
-    
-template <class listdata>
-void List<listdata>::insertStar(data)  
-{
-    if(!offEnd)
-    {
-        Node* N = new Node(data);
-        N->linknext = start;
-        start->linkprevious = N;
-        start = N;
-    }
-            size++;
+    return iterator = NULL;
 }
 
 template <class listdata>
-void List<listdat>::insertStop(listdata data)
+listdata List<listdata>::getIterator() const
 {
-    if(size ==0)
+    assert(!=0)
+    return iterator->data;
+}
+
+template <class listdata>
+void List<listdata>::insertStart(listdata data)
+{
+    if(size == 0)
     {
         Node* N = new Node(data);
         start = stop = N;
     }
     else
     {
-        Node* N = new Node(data);
-        N = stop;
+    Node* N = new Node(data);
+    N->linknext = start;
+    start->linkprevious = N;
+    start = N;
+    }
+    size++;
+}
+
+template <class listdata>
+void List<listdata>::insertStop(listdata data)
+{
+    Node* N = new Node(data);
+    if(size == 0)
+        start = stop = N;
+    else
+    {
         stop->linknext = N;
         N->linkprevious = stop;
         stop = N;
-        size++;
+    }
+    size++;
+}
+
+template <class listdata>
+void List<listdata>::removeStart()
+{
+        assert(!Empty())
+        if(iterator == start)
+            iterator = NULL;
+        if(size ==1)
+        {
+            delete start;
+            start = stop = NULL;
+            size = 0;
+        }
+    else
+    {
+        Node* temp = start;
+        start = start->linknext;
+        start->linkprevious = NULL;
+        delete temp;
+        size--;
     }
 }
 
 template <class listdata>
-bool List<listdat>::operator==(const List& list)
+void List<listdata>::removeStop()
 {
-    if(size != list.size)
-        return false;
-    Node* temp1 = start;
-    Node* temp2 = start.list;
-    while(temp1 != NULL)
-    {    
-        temp1 = temp1->linkenxt;
-        temp2 = temp2->linknext;
-        if(temp1 != temp2)
-        {
-            return false;
-        }
-        else 
-            return true;
+    assert(!Empty);
+    if(iterator == stop)
+        iterator = NULL;
+    if(size ==1 )
+    {
+        delete start;
+        start = stop = NULL;
+        size = 0;
+    }
+    else 
+    {
+        Node* temp = stop;
+        stop = stop->linkprevious;
+        stop->linknext = NULL;
+        delete temp;
+        size--;
     }
 }
+
+template <class listdata>
+void List<listdata>::pointIterator()
+{
+    assert(!Empty)
+    iterator = start;
+}
+
+template <class listdata>
+void List<listdata>::advanceIterator()
+{
+    assert(!offEnd);
+    iterator = iterator->linknext;
+}
+
+template <class listdata>
+void List<listdata>::reverseIterator()
+{
+    assert(!offEnd);
+    iterator = iterator->linkprevious;
+}
+
+template <class listdata>
+void List<listdata>::insertIterator(listdata data)
+{
+    asset(!offEnd);
+    if(iterator== stop)
+        insertStop(data);
+    else if (iterator == start)
+        insertStart(data);
+    else
+    {
+        Node* N = new Node(data);
+        N->linknext = iterator->linknext;
+        iterator->linknext->linkprevious = N;
+        N->linkprevious = iterator;
+        iterator->linknext = N;
+        size++;
+    }
+}
+
 
 
 
