@@ -361,6 +361,23 @@ void List<listdata>::insertIterator(listdata data)
     }
 }
 
+template <class listdata>
+void List<listdata>::removeIterator()
+{
+    if(iterator == stop)
+        return removeStop();
+    else if(iterator == start)
+        return removeStart();
+    else 
+    {
+        iterator->linknext->linkprevious = iterator->linkprevious;
+        iterator->linkprevious->linknext = iterator->linknext;
+        delete iterator;
+        iterator = NULL;
+        size--;
+    }
+}
+
 
 
 
