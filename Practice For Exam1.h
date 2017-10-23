@@ -378,7 +378,68 @@ void List<listdata>::removeIterator()
     }
 }
 
+template <class listdata>
+void List<listdata>::printNumberedList() const
+{
+    
+}
 
+
+
+template <class listdata>
+void List<listdata>::reversePrint(Node* node) const
+{
+    Node* temp = node;
+    if(temp== NULL)
+    {
+        cout << "" << endl;
+        return;
+    }
+    else 
+    {
+        cout << temp->data << " ";
+        reversePrint(temp->linkprevious);
+    }
+}
+
+template <class listdata>
+void List<listdata>::reversePrint(Node* node) const
+{
+    Node* temp = node;
+    if(temp == NULL)
+    {   
+        cout << " " << endl;
+        return;
+    }
+    else 
+    {
+        cout << temp->data << " ";
+        return reveersePrint(temp->linkprevious);
+    }
+}
+
+template <class listdata>
+void List<listdata>::reversePrint() const
+{
+    reversePrint(stop);
+}
+
+template <class listdata>
+bool List<listdata>::operator==(const List& list)
+{
+    if(size != list.size)
+        return false;
+    Node* temp1 = list;
+    Node* temp2 = list.start;
+    while(temp1 != NULL)
+    {
+        if(temp1->data != temp2->data)
+            return false;
+        temp1 = temp1->linknext;
+        temp2 = temp2->linknext;
+    }
+    return true;
+}
 
 
 #endif /* QUEUE_H_ */
