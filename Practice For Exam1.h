@@ -533,7 +533,7 @@ List<listdata>::List(const List &list)
     while(temp->linkext != NULL)
     {
         temp = temp->linknext;
-        iterator->linknext = new Node(temp->data);
+        iterator->linknext = new Node(temp->data);  
         iterator->linknext->linkprevious = iterator;
         iterator = iterator->linknext;
     }
@@ -542,6 +542,44 @@ List<listdata>::List(const List &list)
     
 }
 
+void List<listdata>::reversePrint(Node* node) const    // PRIVATE
+{
+    Node* temp = node;
+    if(temp == NULL)
+    {
+        cout << " " << endl;
+        return;
+    }
+    else
+    {
+        cout << temp->data << " " << endl;
+        reversePrint(temp->linkprevious);
+    }
+}
+
+
+template <class queuedata>
+Queue<queuedata>::Queue(const Queue &queue)
+{
+    queue = queue.size;
+    if(queue->front == NULL)
+    {
+        back = front = NULL;
+    }
+    else
+    {
+        queue = new Node(queue.fromt->data);
+        Node* temp = queue.front;
+        Node* Qtemp = front;
+        while(temp->link != NULL)
+        {
+            temp = temp->link;
+            Qtemp->link = new Node(temp->data);
+            Qtemp = Qtemp->link;
+        }
+        back = Qtemp;
+    }
+}
 //Indicates the index of the Node where the iterator is currently pointing
 //Nodes are numbered starting at 1 through the size of the list
 //Pre: !offEnd()
