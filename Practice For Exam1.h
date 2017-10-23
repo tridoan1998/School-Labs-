@@ -381,7 +381,15 @@ void List<listdata>::removeIterator()
 template <class listdata>
 void List<listdata>::printNumberedList() const
 {
-    
+    assert(!empty);
+    Node* temp = start;
+    int numberlist = 0;
+    while(temp != NULL)
+    {
+        numberlist++;
+        cout << numberlist << temp->data << endl;
+        temp = temo->linknext;
+    }
 }
 
 
@@ -440,6 +448,102 @@ bool List<listdata>::operator==(const List& list)
     }
     return true;
 }
+    
+bool isEmpty()
+{
+    return size == 0;
+}
+template <class listdata>
+void List<listdata>::reversePrint(Node* node) const 
+{
+    Node* temp = node;
+        if(temp == NULL)
+            return;
+        else
+        {   
+            cout << temp->data << endl;
+            reversePrint(temp->linkprevious);
+        }
+}
+template <class listdata>
+void List<listdata>::reversePrint() const  
+{
+    reversePrint(stop);
+}
 
+template <class listdata>
+bool List<listdata>::isSorted(Node* node) const  
+{
+    if(node == NULL|| node->linknext = NULL) return false;
+    else   
+    {
+        if(node->data > node->linknext->data) return false;
+            return (isSorted(node->linknext));
+    }
+}
+template <class listdata>
+int List<listdata>::getIndex() const  
+{
+    assert(!offEnd());
+    int count = 1;
+    Node* temp = iterator;
+    while(temp !=NULL)
+    {
+        temp = temp->linkprevious;
+        count++;
+    }
+    return i;
+}
+
+bool List<listdata>::isSorted(Node* node) const // PRIVATE
+{
+    if(node == 0 || node->linknext == NULL) return true;
+    else
+    {
+        if(node->data > node->linknext->data) return false;
+        return isSorted(node->linknext);
+    }
+}
+
+List<listdata>::List(const List &list)
+{
+    if(list.start == NULL)
+        start = stop = iterator = NULL;
+        
+    start = new Node(list.start->data);
+    Node* temp = list.start;
+    iterator = start;
+    
+    while(temp->linknext !=NULL)
+    {
+        temp = temp->linknext;
+        iterator->linknext = new Node(temp->data);
+        iterator->linknext->linkprevious = iterator;
+        iterator = iterator->linknext;
+    }
+    stop = iterator;
+    iterator = NULL;
+}
+{
+    if(list.start = NULL)
+        start = stop = iterator = NULL;
+    start = new Node(list.start->data);
+    Node* temp = list.start;
+    iterator = start;
+    while(temp->linkext != NULL)
+    {
+        temp = temp->linknext;
+        iterator->linknext = new Node(temp->data);
+        iterator->linknext->linkprevious = iterator;
+        iterator = iterator->linknext;
+    }
+    stop = iterator;
+    iterator = NULL;
+    
+}
+
+//Indicates the index of the Node where the iterator is currently pointing
+//Nodes are numbered starting at 1 through the size of the list
+//Pre: !offEnd()
 
 #endif /* QUEUE_H_ */
