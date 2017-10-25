@@ -561,27 +561,81 @@ void List<listdata>::reversePrint(Node* node) const    // PRIVATE
 template <class queuedata>
 Queue<queuedata>::Queue(const Queue &queue)
 {
-    queue = queue.size;
-    if(queue->front == NULL)
+    size = queue.size;
+    if(queu.front == NULL)
+        front = back = NULL;
+    else
     {
-        back = front = NULL;
+        front = new Node(queue.front->data);
+        Node* temp = queue.front;
+        Node* Stemp = front;
+        while(temp->link != NULLL)
+        {
+            temp = temp->link;
+            Stemp->link = new Node(temp->data);
+            Stemp = Stemp->link;
+        }
+        back = Stemp;
+    }
+}
+
+template<class queuedata>
+void Queue<queuedata>::enqueue(queuedata data)
+{
+    //insertStop
+    Node* N = new Node(data);
+    assert(!empty);
+    if(size == 1)
+    {
+        start = stop = N;
     }
     else
     {
-        queue = new Node(queue.fromt->data);
-        Node* temp = queue.front;
-        Node* Qtemp = front;
-        while(temp->link != NULL)
-        {
-            temp = temp->link;
-            Qtemp->link = new Node(temp->data);
-            Qtemp = Qtemp->link;
-        }
-        back = Qtemp;
+        stop->linknext = N;
+        N->linkprevious = stop;
+        stop = N;
     }
+    size++;
 }
-//Indicates the index of the Node where the iterator is currently pointing
-//Nodes are numbered starting at 1 through the size of the list
-//Pre: !offEnd()
+
+template<class queuedata>
+void Queue<queuedata>::dequeue()
+{
+    assert(!empty)
+    if(size ==1)
+    {
+        delete start;
+        start =stop = NULL;
+    }
+    else
+    {
+        Node* temp = start;
+        start=  start->linknext;
+        start->linkprevious = NULL;
+        delete temp;
+    }
+    size--;
+}
+swap
+{
+    assert(!empty);
+    
+}
+
+string input;
+getline(cin, input);
+List<char> L1;
+char c;
+c = input[c];
+L1.insertStart(c);
+L1.pointIterator();
+for(int i = 0; i <= input.length; i++)
+{
+    c = input[i];
+    L1.insertIterator(c);
+    L1.advancedIterator();
+}
+
+
 
 #endif /* QUEUE_H_ */
