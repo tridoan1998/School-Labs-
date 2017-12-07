@@ -1,173 +1,121 @@
+#ifndef QUEUE_H_
+#define QUEUE_H_
 
 #include <iostream>
+#include <cstddef>
+#include <assert.h>
 using namespace std;
 
-template <class listdata>
-class List()
+
+template <class queuedata>
+class queue
 {
-private:
+   public:
+        /**constructors and destructors**/
+
+        Queue();
+        //initializes an empty queue
+        //postcondition: an empty queue
+
+        Queue(const Queue &queue);
+        //initializes queue to have same elements as another queue
+        //postcondition: a copy of queue
+
+        ~Queue();
+        //frees memory allocated to the queue
+        //postcondition: memory for queue has been freed
+
+        /**manipulation procedures**/
+
+        void dequeue();
+        //removes an element from the front of the queue
+        //precondition:size!=0
+        //postcondition: an element has been removed from the front of the queue
+
+        void enqueue(queuedata data);
+        //adds an element to the end of the queue
+        //postcondition: an element added to the end of the queue
+
+        /**accessors**/
+
+        bool operator==(const Queue &queue);
+        //returns whether this queue is equal to another queue
+
+        queuedata getFront() const;
+        //returns the element at the front of the queue
+        //precondition: size != 0
+
+        int getSize() const;
+        //returns the size of the queue
+
+        bool empty() const;
+        //returns whether the queue is empty
+
+        /**additional queue operations**/
+        void print() const;
+        //prints the elements in the queue separated by a blank space to stdout
+
+    private:
     struct Node()
     {
-        Node* linknext; 
-        Node* linkprevious;
-        listdata data;
+        Node* link;
+        queuedata data;
         
-        Node(listdata newdata){
-            data = newdata;
-            linknext = null;
-            linkprevious = null;
+        Node(queuedata ndata)
+        {
+            ndata = data;
+            link = NULL;
         }
-        Node* start;
-        Node* stop;
-        Node* Iterator;
-        int size;
+        Node* front; 
+        Node* back;
+        int size; 
     }
 }
 
-template <class listdata>
-List<listdata>::List()
+template <class queuedata>
+Queue<queuedata>::Queue()
 {
-    start = stop = null;
+    front = back = link = null;
     size = 0;
 }
-template < class listdata>
-List<listdata>::~List()
-{
-    Iterator = start;
-    Node* temp = null;
-    while(Iterator !=null)
-    {
-        temp = Iterator->linknext;
-        delete Iterator;
-        Iterator = temp;
-    }
-}
 
-template <class listdata>
-List<listdata>::print()
-{
-    Node* temp = start;
-    while(temp != null)
-    {
-        cout << temp->data << " ";
-        temp = temp->linknext;
-    }
-}
-
-template <class listdata>
-List<listdata>::insertStart()
-{
-    Node* N = new Node(data);
-    if(size == 0)
-    {
-        start = stop = N;
-        
-    }
-    else 
-    {
-        N->linknext = start;
-        start->linkprevious = N;
-        start = N;
-    }
-    size++;
-}
-
-template <class listdata>
-List<listdata>::insertStop()
+template <class queuedata>
+void Queue<queuedata>::enqueue(queuedata data)
 {
     if(size == 0)
     {
         Node* N = new Node(data);
-        start  = stop = N;
+        front = back = N;
+        size++;
     }
-    else
+    else 
     {
         Node* N = new Node(data);
-        N->linkprevious = stop;
-        stop->linknext = N;
-        stop = N;
+        N->link = back;
+        back = N;
+        size++;
     }
-    size++;
 }
 
-template <class listdata>
-List<listdara>::removeStart()
+template <class queuedata>
+void Queue<queuedata>::dequeue()
 {
-    assert(size != 0);
-    if(size == 1)
+    assert(!empty());
+    if(size == 1 )
     {
-        start = stop = iterator =  null;
+        delete front;
+        front = back = null;
+        size = 0;
     }
     else 
     {
-        Node* temp = start; 
-        start = start->linknext;
-        start->linkprevious = null;
+        Node* temp = front;
+        front= front->link;
         delete temp;
-    }
-    size++;
-}
-
-template <class listdata>
-List<listdata>::removeStop()
-{
-    assert(size !=0)
-    if(size == 1)
-    {
-        delete start;
-        start  = stop = iterator = null;
-    }
-    else
-    {
-        Nod* temp = stop;
-        stop = stop->linkprevious;
-        stop->linknext= null;
-        delete temp;
-    }
-    size--;
-}
-
-template <class listdata>
-bool List<listdata>::isempty()
-{
-    return size == 0;
-}
-
-template <class listdata>
-listdata List<listdata>::getIterator()
-{
-    assert(size != 0)
-    if(offend())
-    {
-        cout << "Iterator is offend";
-        return -1;
-    }
-    else
-        return Iterator->data;
-}
-
-template <class listdata>
-void List<listdata>::deleteIterator()
-{
-    assert( size != 0);
-    assert(!offEnd());
-    if(Iterator == start)
-    {
-        removeStart();
         size--;
     }
-    else if(Iterator == stop)
-    {
-        removeStop();
-        size--;
-    }
-    else 
-    {
-        Iterator->linknext->linkprevious = Iterator->linknprevious;
-        Iterator->linkprevious->linknext = Iterator->linknext;
-        delete Iterator;
-        Iterator = null;
-        size--;
-    }
-}   
+}
 
+
+
+#endif /* QUEUE_H_ */
