@@ -193,6 +193,18 @@ BST<bstdata::insert(Node* root, bstdata data)
         else 
             return insert(root->rightchild);
 }
-
-
-
+template <class bstdata>
+typename BST<bstdata>::Node* BST<bstdata>::deleteNode(Node* root, bstdata data)
+{
+    if(root == null) return root;
+    else if (data > root->data)
+        return deleteNode(root->rightchild, data);
+    else if(data < root->data)
+        return deleteNode(root->leftchild, data);
+    else
+    {
+        if(root->leftchild == null && root->rightchild == null)
+            delete root;
+            root = null;
+    }
+}
